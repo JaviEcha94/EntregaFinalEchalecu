@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Mi perfil{% endblock %}
+{% block content %}
+<h2>Mi perfil</h2>
+<table class="table">
+  <tr><th>Nombre</th><td>{{ request.user.first_name|default:"-" }}</td></tr>
+  <tr><th>Apellido</th><td>{{ request.user.last_name|default:"-" }}</td></tr>
+  <tr><th>Email</th><td>{{ request.user.email|default:"-" }}</td></tr>
+  <tr><th>Usuario</th><td>{{ request.user.username }}</td></tr>
+</table>
+<p style="margin-top:1rem;">
+  <a class="btn" href="{% url 'accounts:edit_profile' %}">Editar perfil</a>
+</p>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Inicio - Entrega Final{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Bienvenido 👋</h1>
+  <p>Sumá nuevos títulos al catálogo y administralos desde el listado.</p>
+  <p><a class="btn" href="{% url 'store:game_list' %}">Ir al catálogo</a></p>
+</section>
+{% endblock %}

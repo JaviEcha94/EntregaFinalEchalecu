@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Catálogo de Juegos{% endblock %}
+{% block content %}
+<h2>Catálogo de Videojuegos</h2>
+<form method="get" class="search">
+  <input type="text" name="q" placeholder="Buscar por título, género o clasificación..." value="{{ q }}">
+  <button class="btn" type="submit">Buscar</button>
+  {% if q %}<a href="{% url 'store:game_list' %}" class="btn" style="background:#374151;">Limpiar</a>{% endif %}
+</form>
+<p class="small">Cargá solo videojuegos reales (ej.: "Elden Ring", "God of War", "The Last of Us").</p>
+{% if games %}
+<div class="grid">
+  {% for g in games %}
+  <div class="card">
+    <a href="{% url 'store:game_detail' g.pk %}" style="flex:1;">
+      {% if g.cover %}
+        <img src="{{ g.cover.url }}" alt="Portada {{ g.title }}" class="cover">
+      {% else %}
+        <div class="cover" style="display:flex;align-items:center;justify-content:center;">Sin portada</div>
+      {% endif %}
+      <h3 style="margin:.5rem 0 0;">{{ g.title }}</h3>
+      <div class="small">{{ g.genre }} • {{ g.year }} • {{ g.rating }}</div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+  {% if q %}
+    <p>No se encontraron videojuegos para "<strong>{{ q }}</strong>".</p>
+  {% else %}
+    <p>Todavía no hay videojuegos cargados. ¡Agregá el primero! 👇</p>
+  {% endif %}
+{% endif %}
+<p style="margin-top:1rem;">
+  {% if request.user.is_authenticated %}
+    <a class="btn" href="{% url 'store:game_create' %}">➕ Cargar videojuego</a>
+  {% else %}
+    <a class="btn" href="{% url 'accounts:login' %}">Ingresá para cargar videojuegos</a>
+  {% endif %}
+</p>
+{% endblock %}

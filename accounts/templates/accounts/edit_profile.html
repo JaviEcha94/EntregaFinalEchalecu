@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Editar perfil{% endblock %}
+{% block content %}
+<h2>Editar perfil</h2>
+
+{# --- Formulario de datos de cuenta (username, nombre, apellido, email) --- #}
+<form method="post" style="margin-bottom:2rem;">
+  {% csrf_token %}
+  <h3 style="margin-top:0;">Datos de la cuenta</h3>
+
+  <div class="form-row">
+    {{ form.username.label_tag }} {{ form.username }}
+    {% if form.username.errors %}<div class="error">{{ form.username.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ form.first_name.label_tag }} {{ form.first_name }}
+    {% if form.first_name.errors %}<div class="error">{{ form.first_name.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ form.last_name.label_tag }} {{ form.last_name }}
+    {% if form.last_name.errors %}<div class="error">{{ form.last_name.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ form.email.label_tag }} {{ form.email }}
+    {% if form.email.errors %}<div class="error">{{ form.email.errors.0 }}</div>{% endif %}
+  </div>
+
+  <button class="btn" type="submit" name="save_profile">Guardar cambios</button>
+  <a class="btn" href="{% url 'accounts:profile' %}" style="background:#374151;">Cancelar</a>
+</form>
+
+<hr style="border-color:#1f2937;">
+
+{# --- Formulario de cambio de contraseña --- #}
+<form method="post">
+  {% csrf_token %}
+  <h3>Cambiar contraseña</h3>
+
+  <div class="form-row">
+    {{ pwd_form.old_password.label_tag }} {{ pwd_form.old_password }}
+    {% if pwd_form.old_password.errors %}<div class="error">{{ pwd_form.old_password.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ pwd_form.new_password1.label_tag }} {{ pwd_form.new_password1 }}
+    {% if pwd_form.new_password1.help_text %}<small class="small">{{ pwd_form.new_password1.help_text|safe }}</small>{% endif %}
+    {% if pwd_form.new_password1.errors %}<div class="error">{{ pwd_form.new_password1.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ pwd_form.new_password2.label_tag }} {{ pwd_form.new_password2 }}
+    {% if pwd_form.new_password2.errors %}<div class="error">{{ pwd_form.new_password2.errors.0 }}</div>{% endif %}
+  </div>
+
+  <button class="btn" type="submit" name="change_password">Actualizar contraseña</button>
+</form>
+
+<style>
+  .error{ color:#fca5a5; margin-top:.25rem; }
+</style>
+{% endblock %}

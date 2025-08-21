@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Registrarse{% endblock %}
+
+{% block content %}
+<h2>Crear cuenta</h2>
+
+{# --- Resumen de errores generales (si hay) --- #}
+{% if form.non_field_errors %}
+  <div class="error-box">
+    {% for e in form.non_field_errors %}
+      <p>{{ e }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<form method="post" novalidate>
+  {% csrf_token %}
+
+  <div class="form-row">
+    {{ form.username.label_tag }}
+    {{ form.username }}
+    {% if form.username.help_text %}<small class="small">{{ form.username.help_text|safe }}</small>{% endif %}
+    {% if form.username.errors %}<div class="error">{{ form.username.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ form.email.label_tag }}
+    {{ form.email }}
+    {% if form.email.errors %}<div class="error">{{ form.email.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ form.first_name.label_tag }}
+    {{ form.first_name }}
+    {% if form.first_name.errors %}<div class="error">{{ form.first_name.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ form.last_name.label_tag }}
+    {{ form.last_name }}
+    {% if form.last_name.errors %}<div class="error">{{ form.last_name.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ form.password1.label_tag }}
+    {{ form.password1 }}
+    {% if form.password1.help_text %}<small class="small">{{ form.password1.help_text|safe }}</small>{% endif %}
+    {% if form.password1.errors %}<div class="error">{{ form.password1.errors.0 }}</div>{% endif %}
+  </div>
+
+  <div class="form-row">
+    {{ form.password2.label_tag }}
+    {{ form.password2 }}
+    {% if form.password2.errors %}<div class="error">{{ form.password2.errors.0 }}</div>{% endif %}
+  </div>
+
+  <button class="btn" type="submit">Crear cuenta</button>
+  <a class="btn" href="{% url 'accounts:login' %}" style="background:#374151;">Ya tengo cuenta</a>
+</form>
+
+{# --- Estilos simples para resaltar errores (usa tu CSS base) --- #}
+<style>
+  .error-box{background:#3f1d1d;border:1px solid #b91c1c;color:#fca5a5;
+             padding:.6rem .8rem;border-radius:8px;margin-bottom:1rem;}
+  .error{color:#fca5a5;margin-top:.25rem;}
+</style>
+{% endblock %}
